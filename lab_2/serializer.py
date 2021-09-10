@@ -1,14 +1,11 @@
 import json_serializer
 import json_deserializer
-import toml_serializer
 import yaml_serializer
 
 
 def _get_serializer(type):
     if type == "json":
         return json_serializer.dumps
-    elif type == "toml":
-        return toml_serializer.dumps
     elif type == "yaml":
         return yaml_serializer.dumps
     else:
@@ -32,8 +29,6 @@ def dump(obj, type, fp):
 def _get_deserializer(type):
     if type == "json":
         return json_deserializer.loads
-    elif type == "toml":
-        return toml_serializer.loads
     elif type == "yaml":
         return yaml_serializer.loads
     else:
@@ -51,4 +46,4 @@ def load(fp, type):
             str = file.read()
     except FileNotFoundError:
         raise FileNotFoundError("file doesn't exist")
-    return loads(str)
+    return loads(str, type)

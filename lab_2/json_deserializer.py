@@ -9,7 +9,6 @@ def dict_to_module(obj):
         raise ImportError(str(obj) + " not found")
 
 
-
 def parse_symbol(string, idx):
     if string[idx] == '"':
         obj, idx = parse_string(string, idx + 1)
@@ -40,7 +39,6 @@ def parse_symbol(string, idx):
     else:
         raise StopIteration(idx)
     return obj, idx
-
 
 
 def parse_dict(string, idx):
@@ -120,7 +118,6 @@ def parse_dict(string, idx):
         return args, idx + 1
 
 
-
 def parse_string(string, idx):
     first = idx
     opened = False
@@ -136,13 +133,11 @@ def parse_string(string, idx):
     return string[first:idx], idx + 1
 
 
-
 def dict_to_class(cls):
     try:
         return type(cls["name"], cls["bases"], cls["dict"])
     except IndexError:
         raise StopIteration("Incorrect class")
-
 
 
 def dict_to_obj(obj):
@@ -163,10 +158,8 @@ def dict_to_obj(obj):
         raise StopIteration("Incorrect object")
 
 
-
 def dict_to_cell(obj):
     return types.CellType(obj)
-
 
 
 def dict_to_code(obj):
@@ -190,7 +183,6 @@ def dict_to_code(obj):
     )
 
 
-
 def collect_funcs(obj, is_visited):
     for i in obj.__globals__:
         attr = obj.__globals__[i]
@@ -198,7 +190,6 @@ def collect_funcs(obj, is_visited):
             is_visited[attr.__name__] = attr
             is_visited = collect_funcs(attr, is_visited)
     return is_visited
-
 
 
 def set_funcs(obj, is_visited, gls):
@@ -209,7 +200,6 @@ def set_funcs(obj, is_visited, gls):
             attr.__globals__.update(gls)
             is_visited = set_funcs(attr, is_visited, gls)
     return is_visited
-
 
 
 def dict_to_func(obj):
@@ -234,7 +224,6 @@ def dict_to_func(obj):
     return res
 
 
-
 def parse_digit(string, idx):
     first = idx
     try:
@@ -257,7 +246,6 @@ def parse_digit(string, idx):
             return float(res), idx
         except ValueError:
             raise StopIteration(idx)
-
 
 
 def parse_list(string, idx):
@@ -294,7 +282,6 @@ def parse_list(string, idx):
     return list(args), idx + 1
 
 
-
 def loads(string):
     idx = 0
     try:
@@ -312,7 +299,6 @@ def loads(string):
     except IndexError:
         pass
     return obj
-
 
 
 def load(fp):
